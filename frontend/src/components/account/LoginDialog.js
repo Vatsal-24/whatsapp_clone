@@ -13,19 +13,19 @@ const useStyles = makeStyles(() => ({
   title: {
     paddingBottom: "5%",
     color: "#41525d",
+    // ! not working
     fontSize: "28px",
-    fontWeight: "300",
+    fontWeight: "800",
     fontFamily: "inherit",
+    // ! not working
   },
   listItem: {
-    padding: "0",
+    padding: "10px",
+    // ! not working
     fontSize: "18px",
-    marginTop: "25px",
     color: "#3b4a54",
-    lineHeight: "25px",
   },
   qrBox: {
-    maxWidth: "75%",
     position: "relative",
   },
   oauth: {
@@ -35,6 +35,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
+// outermost dialog styling
 const dialogStyle = {
   height: "90%",
   marginTop: "12%",
@@ -48,29 +49,38 @@ const dialogStyle = {
 const LoginDialog = () => {
   const classes = useStyles();
 
+  //Google login success function
   const onLoginSuccess = (res) => {
     const decodedInfo = jwt_decode(res.credential);
     console.log(decodedInfo);
   };
+  //Google login failure function
   const onLoginError = (res) => {
     console.log("Login fail...", res);
   };
+
   return (
     <Dialog open={true} PaperProps={{ sx: dialogStyle }}>
-      <Grid container alignContent={"center"} margin={5}>
-        <Grid item sm={6} textAlign="center">
+      <Grid container margin={5}>
+        <Grid item sm={6}>
           <Typography className={classes.title}>
             Use Whatsapp on your computer
           </Typography>
           <List>
-            <ListItem className={classes.listItem}>
-              1. Open Whatsapp on your phone
+            <ListItem>
+              <Typography className={classes.listItem}>
+                1. Open Whatsapp on your phone
+              </Typography>
             </ListItem>
-            <ListItem className={classes.listItem}>
-              2. Tap Menu Settings and select Whatsapp Web
+            <ListItem>
+              <Typography className={classes.listItem}>
+                2. Tap Menu Settings and select Whatsapp Web
+              </Typography>
             </ListItem>
-            <ListItem className={classes.listItem}>
-              3. Point your phone to this screen to capture the code.
+            <ListItem>
+              <Typography className={classes.listItem}>
+                3. Point your phone to this screen to capture the code.
+              </Typography>
             </ListItem>
           </List>
         </Grid>
