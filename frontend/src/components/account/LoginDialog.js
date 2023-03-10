@@ -4,24 +4,20 @@ import Typography from "@mui/material/Typography";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Grid from "@mui/material/Grid";
-import { makeStyles } from "@mui/styles";
 import { qrCodeImage } from "../../constants/constants";
 import { GoogleLogin } from "@react-oauth/google";
 import jwt_decode from "jwt-decode";
 
-const useStyles = makeStyles(() => ({
+const style = {
   title: {
     paddingBottom: "5%",
     color: "#41525d",
-    // ! not working
     fontSize: "28px",
     fontWeight: "800",
     fontFamily: "inherit",
-    // ! not working
   },
   listItem: {
     padding: "10px",
-    // ! not working
     fontSize: "18px",
     color: "#3b4a54",
   },
@@ -33,7 +29,7 @@ const useStyles = makeStyles(() => ({
     top: "40%",
     left: "32%",
   },
-}));
+};
 
 // outermost dialog styling
 const dialogStyle = {
@@ -47,8 +43,6 @@ const dialogStyle = {
 };
 
 const LoginDialog = () => {
-  const classes = useStyles();
-
   //Google login success function
   const onLoginSuccess = (res) => {
     const decodedInfo = jwt_decode(res.credential);
@@ -63,30 +57,30 @@ const LoginDialog = () => {
     <Dialog open={true} PaperProps={{ sx: dialogStyle }}>
       <Grid container margin={5}>
         <Grid item sm={6}>
-          <Typography className={classes.title}>
+          <Typography style={style.title}>
             Use Whatsapp on your computer
           </Typography>
           <List>
             <ListItem>
-              <Typography className={classes.listItem}>
+              <Typography style={style.listItem}>
                 1. Open Whatsapp on your phone
               </Typography>
             </ListItem>
             <ListItem>
-              <Typography className={classes.listItem}>
+              <Typography style={style.listItem}>
                 2. Tap Menu Settings and select Whatsapp Web
               </Typography>
             </ListItem>
             <ListItem>
-              <Typography className={classes.listItem}>
+              <Typography style={style.listItem}>
                 3. Point your phone to this screen to capture the code.
               </Typography>
             </ListItem>
           </List>
         </Grid>
-        <Grid item sm={6} textAlign={"center"} className={classes.qrBox}>
+        <Grid item sm={6} textAlign={"center"} style={style.qrBox}>
           <img src={qrCodeImage} alt="qr code" />
-          <Box className={classes.oauth}>
+          <Box style={style.oauth}>
             <GoogleLogin onSuccess={onLoginSuccess} onError={onLoginError} />
           </Box>
         </Grid>
