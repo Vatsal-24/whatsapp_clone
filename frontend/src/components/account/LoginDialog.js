@@ -7,6 +7,8 @@ import Grid from "@mui/material/Grid";
 import { qrCodeImage } from "../../constants/constants";
 import { GoogleLogin } from "@react-oauth/google";
 import jwt_decode from "jwt-decode";
+import { AccountContext } from "../context/AccountProvider";
+import { useContext } from "react";
 
 const style = {
   title: {
@@ -14,7 +16,6 @@ const style = {
     color: "#41525d",
     fontSize: "28px",
     fontWeight: "800",
-    fontFamily: "inherit",
   },
   listItem: {
     padding: "10px",
@@ -43,10 +44,13 @@ const dialogStyle = {
 };
 
 const LoginDialog = () => {
+  const { account, setAccount } = useContext(AccountContext);
   //Google login success function
   const onLoginSuccess = (res) => {
     const decodedInfo = jwt_decode(res.credential);
     console.log(decodedInfo);
+    setAccount(decodedInfo);
+    console.log(account);
   };
   //Google login failure function
   const onLoginError = (res) => {
@@ -54,7 +58,7 @@ const LoginDialog = () => {
   };
 
   return (
-    <Dialog open={true} PaperProps={{ sx: dialogStyle }}>
+    <Dialog open={true} PaperProps={{ sx: dialogStyle }} hideBackdrop={true}>
       <Grid container margin={5}>
         <Grid item sm={6}>
           <Typography style={style.title}>

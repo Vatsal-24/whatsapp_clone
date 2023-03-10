@@ -1,6 +1,8 @@
 import "./App.css";
 import Messenger from "./components/Messenger";
+import ChatDialog from "./components/chat/ChatDialog";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import AccountProvider from "./components/context/AccountProvider";
 
 function App() {
   const clientID =
@@ -8,15 +10,9 @@ function App() {
 
   return (
     <GoogleOAuthProvider clientId={clientID}>
-      <div
-        className="App"
-        style={{
-          padding: "0px",
-          margin: "0px",
-        }}
-      >
+      <AccountProvider>
         <Messenger />
-      </div>
+      </AccountProvider>
     </GoogleOAuthProvider>
   );
 }
