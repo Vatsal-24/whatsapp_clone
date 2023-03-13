@@ -5,6 +5,8 @@ import { AccountContext } from "../context/AccountProvider";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import MessageIcon from "@mui/icons-material/Message";
 import { Grid, IconButton } from "@mui/material";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 
 export default function Header() {
   const { account } = useContext(AccountContext);
@@ -26,6 +28,22 @@ export default function Header() {
       padding: "15px",
       color: "#54656f",
     },
+    menuItem: {
+      fontSize: "14px",
+      color: "#3b4a54",
+      padding: "10px 60px 5px 24px",
+    },
+    menu: {
+      boxShadow: "5px ",
+    },
+  };
+  const [menu, setMenu] = React.useState(null);
+  const open = Boolean(menu);
+  const handleClick = (event) => {
+    setMenu(event.currentTarget);
+  };
+  const handleClose = () => {
+    setMenu(null);
   };
 
   return (
@@ -42,9 +60,26 @@ export default function Header() {
               </IconButton>
             </Grid>
             <Grid item style={style.icons}>
-              <IconButton>
+              <IconButton onClick={handleClick}>
                 <MoreVertIcon />
               </IconButton>
+              <Menu
+                id="basic-menu"
+                anchorEl={menu}
+                open={open}
+                onClose={handleClose}
+                MenuListProps={{
+                  "aria-labelledby": "basic-button",
+                }}
+                style={style.menu}
+              >
+                <MenuItem onClick={handleClose} style={style.menuItem}>
+                  Profile
+                </MenuItem>
+                <MenuItem onClick={handleClose} style={style.menuItem}>
+                  Logout
+                </MenuItem>
+              </Menu>
             </Grid>
           </Grid>
         </Grid>
