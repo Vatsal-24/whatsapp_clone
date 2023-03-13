@@ -19,7 +19,7 @@ const style = {
     backgroundColor: "#00bfa5",
   },
   headerAfterLogin: {
-    height: "220px",
+    height: "150px",
     backgroundColor: "#00a884",
   },
 };

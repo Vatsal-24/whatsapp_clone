@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Grid from "@mui/material/Grid";
-import LeftMenu from "../LeftMenu.js/LeftMenu";
+import LeftSide from "../LeftMenu/LeftSide";
 import EmptyChat from "./EmptyChat";
 
 const style = {
@@ -17,7 +17,7 @@ const style = {
 // outermost dialog styling
 const dialogStyle = {
   height: "95%",
-  margin: "20px",
+  margin: "20px 65px",
   width: "100%",
   maxWidth: "100%",
   maxHeight: "100%",
@@ -35,10 +35,10 @@ const ChatDialog = () => {
       maxWidth="md"
     >
       <Grid container>
-        <Grid item xs={4}>
-          <LeftMenu />
+        <Grid item xs={3.5}>
+          <LeftSide />
         </Grid>
-        <Grid item xs={8} style={style.rightPart}>
+        <Grid item xs={8.5} style={style.rightPart}>
           <EmptyChat />
         </Grid>
       </Grid>
