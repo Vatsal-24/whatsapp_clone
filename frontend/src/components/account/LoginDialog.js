@@ -48,9 +48,7 @@ const LoginDialog = () => {
   //Google login success function
   const onLoginSuccess = (res) => {
     const decodedInfo = jwt_decode(res.credential);
-    console.log(decodedInfo);
     setAccount(decodedInfo);
-    console.log(account);
   };
   //Google login failure function
   const onLoginError = (res) => {

@@ -7,6 +7,7 @@ import MessageIcon from "@mui/icons-material/Message";
 import { Grid, IconButton } from "@mui/material";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import InfoDrawer from "../drawer/InfoDrawer";
 
 export default function Header() {
   const { account } = useContext(AccountContext);
@@ -38,6 +39,7 @@ export default function Header() {
     },
   };
   const [menu, setMenu] = React.useState(null);
+  const [openDrawer, setOpenDrawer] = React.useState(false);
   const open = Boolean(menu);
   const handleClick = (event) => {
     setMenu(event.currentTarget);
@@ -46,11 +48,24 @@ export default function Header() {
     setMenu(null);
   };
 
+  const profileOption = () => {
+    setMenu(null);
+    setOpenDrawer(true);
+  };
+  const toggleDrawer = () => {
+    setOpenDrawer(true);
+  };
+
   return (
     <>
       <Box style={style.bar}>
         <Grid container>
-          <Grid item xs={8} style={style.dpImage}>
+          <Grid
+            item
+            xs={8}
+            style={style.dpImage}
+            onClick={() => toggleDrawer()}
+          >
             <img src={account.picture} alt="dp" style={style.profilePicture} />
           </Grid>
           <Grid container item xs={4}>
@@ -72,17 +87,23 @@ export default function Header() {
                   "aria-labelledby": "basic-button",
                 }}
                 style={style.menu}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "left",
+                }}
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
               >
-                <MenuItem onClick={handleClose} style={style.menuItem}>
+                <MenuItem onClick={profileOption} style={style.menuItem}>
                   Profile
-                </MenuItem>
-                <MenuItem onClick={handleClose} style={style.menuItem}>
-                  Logout
                 </MenuItem>
               </Menu>
             </Grid>
           </Grid>
         </Grid>
+        <InfoDrawer openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
       </Box>
     </>
   );
