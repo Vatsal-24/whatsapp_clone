@@ -9,6 +9,7 @@ import { GoogleLogin } from "@react-oauth/google";
 import jwt_decode from "jwt-decode";
 import { AccountContext } from "../context/AccountProvider";
 import { useContext } from "react";
+import { addNewUser } from "../../API/api";
 
 const style = {
   title: {
@@ -46,9 +47,12 @@ const dialogStyle = {
 const LoginDialog = () => {
   const { account, setAccount } = useContext(AccountContext);
   //Google login success function
-  const onLoginSuccess = (res) => {
+  const onLoginSuccess = async (res) => {
     const decodedInfo = jwt_decode(res.credential);
     setAccount(decodedInfo);
+
+    // api call to store user in db
+    await addNewUser(decodedInfo);
   };
   //Google login failure function
   const onLoginError = (res) => {

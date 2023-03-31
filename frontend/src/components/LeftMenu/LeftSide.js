@@ -2,8 +2,9 @@ import React from "react";
 import Header from "./Header";
 import Box from "@mui/material/Box";
 import SearchComponent from "./SearchComponent";
+import Conversations from "../chat/Conversations";
 
-export default function LeftMenu() {
+export default function LeftSide() {
   return (
     <>
       <Box>
@@ -12,6 +13,9 @@ export default function LeftMenu() {
         </Box>
         <Box>
           <SearchComponent />
+        </Box>
+        <Box>
+          <Conversations />
         </Box>
       </Box>
     </>
