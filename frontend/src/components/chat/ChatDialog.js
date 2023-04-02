@@ -26,8 +26,6 @@ const dialogStyle = {
 };
 
 const ChatDialog = () => {
-  const [chatSelected, setChatSelected] = React.useState(true);
-
   const { person } = useContext(AccountContext);
   return (
     <Dialog

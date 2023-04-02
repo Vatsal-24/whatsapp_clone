@@ -4,9 +4,7 @@ import Box from "@mui/material/Box";
 import SearchComponent from "./SearchComponent";
 import Conversations from "../chat/Conversations";
 
-export default function LeftSide(props) {
-  const { userSelected, setUserSelected, chatSelected, setChatSelected } =
-    props;
+export default function LeftSide() {
   return (
     <>
       <Box>
@@ -17,12 +15,7 @@ export default function LeftSide(props) {
           <SearchComponent />
         </Box>
         <Box>
-          <Conversations
-            userSelected={userSelected}
-            setUserSelected={setUserSelected}
-            chatSelected={chatSelected}
-            setChatSelected={setChatSelected}
-          />
+          <Conversations />
         </Box>
       </Box>
     </>
