@@ -1,11 +1,10 @@
+import React, { useContext } from "react";
 import Dialog from "@mui/material/Dialog";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
 import Grid from "@mui/material/Grid";
 import LeftSide from "../LeftMenu/LeftSide";
 import EmptyChat from "./EmptyChat";
+import ChatBox from "./ChatBox";
+import { AccountContext } from "../context/AccountProvider";
 
 const style = {
   rightPart: {
@@ -27,6 +26,9 @@ const dialogStyle = {
 };
 
 const ChatDialog = () => {
+  const [chatSelected, setChatSelected] = React.useState(true);
+
+  const { person } = useContext(AccountContext);
   return (
     <Dialog
       open={true}
@@ -39,7 +41,7 @@ const ChatDialog = () => {
           <LeftSide />
         </Grid>
         <Grid item xs={8.5} style={style.rightPart}>
-          <EmptyChat />
+          {Object.keys(person).length ? <ChatBox /> : <EmptyChat />}
         </Grid>
       </Grid>
     </Dialog>

@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
 import Box from "@mui/material/Box";
-import { useContext } from "react";
 import { AccountContext } from "../context/AccountProvider";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import MessageIcon from "@mui/icons-material/Message";
@@ -11,6 +10,7 @@ import InfoDrawer from "../drawer/InfoDrawer";
 
 export default function Header() {
   const { account } = useContext(AccountContext);
+  const { person } = useContext(AccountContext);
   const style = {
     bar: {
       height: "55px",

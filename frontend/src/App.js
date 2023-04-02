@@ -1,6 +1,5 @@
 import "./App.css";
 import Messenger from "./components/Messenger";
-import ChatDialog from "./components/chat/ChatDialog";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import AccountProvider from "./components/context/AccountProvider";
 

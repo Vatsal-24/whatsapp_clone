@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { AccountContext } from "../context/AccountProvider";
 import Box from "@mui/material/Box";
 import { Typography } from "@mui/material";
-import { fontSize } from "@mui/system";
 
 const style = {
   imageContainer: {
