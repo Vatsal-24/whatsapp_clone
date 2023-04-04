@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from "react";
-import { getAllUsers } from "../../API/api";
+import { getAllUsers } from "../API/api";
 import Box from "@mui/material/Box";
 import { AccountContext } from "../context/AccountProvider";
 
@@ -45,29 +45,30 @@ export default function Conversations() {
   return (
     <>
       <Box style={style.chatContainer}>
-        {users.map(
-          (user) =>
-            account.sub !== user.sub && (
-              <>
-                <Box
-                  style={style.chat}
-                  onClick={() => {
-                    getUser(user);
-                  }}
-                  key={user.sub}
-                >
-                  <Box style={style.dpContainer}>
-                    <img
-                      src={user.picture}
-                      style={style.dp}
-                      alt="profile-pic"
-                    />
+        {users &&
+          users.map(
+            (user) =>
+              account.sub !== user.sub && (
+                <>
+                  <Box
+                    style={style.chat}
+                    onClick={() => {
+                      getUser(user);
+                    }}
+                    key={user.sub}
+                  >
+                    <Box style={style.dpContainer}>
+                      <img
+                        src={user.picture}
+                        style={style.dp}
+                        alt="profile-pic"
+                      />
+                    </Box>
+                    <Box style={style.nameContainer}>{user.name}</Box>
                   </Box>
-                  <Box style={style.nameContainer}>{user.name}</Box>
-                </Box>
-              </>
-            )
-        )}
+                </>
+              )
+          )}
       </Box>
     </>
   );

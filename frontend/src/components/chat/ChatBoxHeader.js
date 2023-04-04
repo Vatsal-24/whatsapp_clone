@@ -40,8 +40,8 @@ const style = {
   },
 };
 
-export default function ChatBoxHeader() {
-  const { person } = useContext(AccountContext);
+export default function ChatBoxHeader(props) {
+  const { person } = props;
   return (
     <>
       <Box style={style.mainContainer}>

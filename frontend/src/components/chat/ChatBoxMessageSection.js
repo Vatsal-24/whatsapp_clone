@@ -12,7 +12,8 @@ const style = {
     overflowY: "scroll",
   },
 };
-export default function ChatBoxMessageSection() {
+export default function ChatBoxMessageSection(props) {
+  const { person } = props;
   return (
     <>
       <Box style={style.container}></Box>
