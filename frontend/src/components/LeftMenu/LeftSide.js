@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "./Header";
 import Box from "@mui/material/Box";
 import SearchComponent from "./SearchComponent";
 import Conversations from "../chat/Conversations";
 
 export default function LeftSide() {
+  const [searchText, setSearchText] = React.useState("");
   return (
     <>
       <Box>
@@ -12,10 +13,10 @@ export default function LeftSide() {
           <Header />
         </Box>
         <Box>
-          <SearchComponent />
+          <SearchComponent setSearchText={setSearchText} />
         </Box>
         <Box>
-          <Conversations />
+          <Conversations searchText={searchText} />
         </Box>
       </Box>
     </>

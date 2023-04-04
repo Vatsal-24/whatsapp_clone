@@ -1,5 +1,6 @@
 import React, { useEffect, useContext } from "react";
 import { getAllUsers } from "../API/api";
+import { setConversation } from "../API/api";
 import Box from "@mui/material/Box";
 import { AccountContext } from "../context/AccountProvider";
 
@@ -27,20 +28,26 @@ const style = {
     borderBottom: "1px solid #e9edef",
   },
 };
-export default function Conversations() {
+export default function Conversations(props) {
   const [users, setUsers] = React.useState([]);
   const { account } = useContext(AccountContext);
   const { setPerson } = useContext(AccountContext);
+  const { searchText } = props;
+
   useEffect(() => {
     async function fetchData() {
       const res = await getAllUsers();
-      setUsers(res);
+      const filteredData = res.filter((user) =>
+        user.name.toLowerCase().includes(searchText.toLowerCase())
+      );
+      setUsers(filteredData);
     }
     fetchData();
-  }, []);
+  }, [searchText]);
 
-  const getUser = (user) => {
+  const getUser = async (user) => {
     setPerson(user);
+    await setConversation({ senderId: account.sub, receiverId: user.sub });
   };
   return (
     <>

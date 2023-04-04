@@ -17,3 +17,11 @@ export const getAllUsers = async () => {
     console.log("Failed to fetch users", err);
   }
 };
+
+export const setConversation = async (data) => {
+  try {
+    await axios.post(`${url}/conversation`, data);
+  } catch (err) {
+    console.log("Failed to set conversation", err);
+  }
+};

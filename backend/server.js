@@ -4,6 +4,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 require("dotenv").config();
 const userRouter = require("./routes/userRoutes");
+const conversationRouter = require("./routes/conversationRoutes");
 
 // creating express app
 const app = express();
@@ -27,6 +28,7 @@ mongoose.connect(DB).then((con) => {
 // routes
 
 app.use("/user", userRouter);
+app.use("/conversation", conversationRouter);
 
 // starting the server
 app.listen(process.env.PORT, () => {

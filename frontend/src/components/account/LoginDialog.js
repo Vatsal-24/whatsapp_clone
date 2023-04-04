@@ -9,7 +9,7 @@ import { GoogleLogin } from "@react-oauth/google";
 import jwt_decode from "jwt-decode";
 import { AccountContext } from "../context/AccountProvider";
 import { useContext } from "react";
-import { addNewUser } from "../../API/api";
+import { addNewUser } from "../API/api";
 
 const style = {
   title: {
