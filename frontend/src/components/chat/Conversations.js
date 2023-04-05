@@ -11,6 +11,11 @@ const style = {
   },
   chat: {
     display: "flex",
+    backgroundColor: "#fff",
+    padding: "5px 15px",
+  },
+  selectedChat: {
+    display: "flex",
     backgroundColor: "#f0f2f5",
     padding: "5px 15px",
   },
@@ -31,7 +36,7 @@ const style = {
 export default function Conversations(props) {
   const [users, setUsers] = React.useState([]);
   const { account } = useContext(AccountContext);
-  const { setPerson } = useContext(AccountContext);
+  const { person, setPerson } = useContext(AccountContext);
   const { searchText } = props;
 
   useEffect(() => {
@@ -57,22 +62,41 @@ export default function Conversations(props) {
             (user) =>
               account.sub !== user.sub && (
                 <>
-                  <Box
-                    style={style.chat}
-                    onClick={() => {
-                      getPerson(user);
-                    }}
-                    key={user.sub}
-                  >
-                    <Box style={style.dpContainer}>
-                      <img
-                        src={user.picture}
-                        style={style.dp}
-                        alt="profile-pic"
-                      />
+                  {person.sub === user.sub ? (
+                    <Box
+                      style={style.selectedChat}
+                      onClick={() => {
+                        getPerson(user);
+                      }}
+                      key={user.sub}
+                    >
+                      <Box style={style.dpContainer}>
+                        <img
+                          src={user.picture}
+                          style={style.dp}
+                          alt="profile-pic"
+                        />
+                      </Box>
+                      <Box style={style.nameContainer}>{user.name}</Box>
                     </Box>
-                    <Box style={style.nameContainer}>{user.name}</Box>
-                  </Box>
+                  ) : (
+                    <Box
+                      style={style.chat}
+                      onClick={() => {
+                        getPerson(user);
+                      }}
+                      key={user.sub}
+                    >
+                      <Box style={style.dpContainer}>
+                        <img
+                          src={user.picture}
+                          style={style.dp}
+                          alt="profile-pic"
+                        />
+                      </Box>
+                      <Box style={style.nameContainer}>{user.name}</Box>
+                    </Box>
+                  )}
                 </>
               )
           )}
