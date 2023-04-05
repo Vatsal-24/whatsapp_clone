@@ -45,9 +45,9 @@ export default function Conversations(props) {
     fetchData();
   }, [searchText]);
 
-  const getUser = async (user) => {
-    setPerson(user);
+  const getPerson = async (user) => {
     await setConversation({ senderId: account.sub, receiverId: user.sub });
+    setPerson(user);
   };
   return (
     <>
@@ -60,7 +60,7 @@ export default function Conversations(props) {
                   <Box
                     style={style.chat}
                     onClick={() => {
-                      getUser(user);
+                      getPerson(user);
                     }}
                     key={user.sub}
                   >

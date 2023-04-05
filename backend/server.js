@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 require("dotenv").config();
 const userRouter = require("./routes/userRoutes");
 const conversationRouter = require("./routes/conversationRoutes");
+const messageRouter = require("./routes/messageRoutes");
 
 // creating express app
 const app = express();
@@ -29,6 +30,7 @@ mongoose.connect(DB).then((con) => {
 
 app.use("/user", userRouter);
 app.use("/conversation", conversationRouter);
+app.use("/message", messageRouter);
 
 // starting the server
 app.listen(process.env.PORT, () => {

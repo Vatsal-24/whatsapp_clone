@@ -27,7 +27,29 @@ exports.newConversation = async (req, res) => {
     console.log(err);
     res.status(500).json({
       status: "error",
-      message: "Error creating new user",
+      message: "Error creating new conversation",
+      error: err,
+    });
+  }
+};
+
+exports.getConversation = async (req, res) => {
+  try {
+    const { senderId, receiverId } = req.query.data;
+    const conversation = await Conversation.findOne({
+      members: { $all: [senderId, receiverId] },
+    });
+
+    return res.status(200).json({
+      status: "success",
+      message: "Conversation fetched successfully",
+      conversation: conversation,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      status: "error",
+      message: "Error getting conversation",
       error: err,
     });
   }

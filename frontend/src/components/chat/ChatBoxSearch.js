@@ -30,14 +30,21 @@ const style = {
     borderRadius: "8px",
   },
 };
-export default function ChatBoxSearch() {
+export default function ChatBoxSearch(props) {
+  const { sendText, typedMessage, setTypedMessage } = props;
   return (
     <>
       <Box style={style.container}>
         <EmojiEmotionsOutlinedIcon style={style.icons} />
         <AttachFileIcon style={style.icons} />
         <Box style={style.searchContainer}>
-          <InputBase placeholder="Type a message" style={style.searchBar} />
+          <InputBase
+            placeholder="Type a message"
+            style={style.searchBar}
+            onChange={(e) => setTypedMessage(e.target.value)}
+            onKeyPress={(e) => sendText(e)}
+            value={typedMessage}
+          />
         </Box>
         <MicIcon style={style.icons} />
       </Box>
