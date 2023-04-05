@@ -10,6 +10,7 @@ export default function ChatBox() {
   const { person, account } = useContext(AccountContext);
   const [conversation, setConversation] = useState({});
   const [typedMessage, setTypedMessage] = React.useState("");
+  const [sendMessageFlag, setSendMessageFlag] = React.useState(false);
 
   const sendText = async (e) => {
     const code = e.which;
@@ -23,6 +24,7 @@ export default function ChatBox() {
       };
       await newMessage(message);
       setTypedMessage("");
+      setSendMessageFlag((prev) => !prev);
     }
   };
 
@@ -44,7 +46,10 @@ export default function ChatBox() {
           <ChatBoxHeader person={person} />
         </Box>
         <Box>
-          <ChatBoxMessageSection person={person} conversation={conversation} />
+          <ChatBoxMessageSection
+            sendMessageFlag={sendMessageFlag}
+            setSendMessageFlag={setSendMessageFlag}
+          />
         </Box>
         <Box>
           <ChatBoxSearch

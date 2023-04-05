@@ -19,7 +19,7 @@ const style = {
 export default function ChatBoxMessageSection(props) {
   const { person, account } = useContext(AccountContext);
   const [messages, setMessages] = useState([]);
-
+  const { sendMessageFlag, setSendMessageFlag } = props;
   useEffect(() => {
     // Fetching conversation
     let conversation = {};
@@ -29,12 +29,11 @@ export default function ChatBoxMessageSection(props) {
         receiverId: person.sub,
       });
       conversation = data.conversation;
-      console.log(person.name, conversation);
       const res = await getMessage(conversation?._id);
       setMessages(res.messages);
     };
     getConversationDeatils();
-  }, [person._id]);
+  }, [person._id, sendMessageFlag]);
   return (
     <>
       <Box style={style.container}>
