@@ -63,7 +63,7 @@ export const getMessage = async (id) => {
 export const uploadFile = async (data) => {
   try {
     const response = await axios.post(`${url}/file`, data);
-    return response.data;
+    return response;
   } catch (err) {
     console.log("Failed to upload file", err);
   }

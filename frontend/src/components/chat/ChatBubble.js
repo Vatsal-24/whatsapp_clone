@@ -3,6 +3,9 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { formatTime } from "../utils/TimeFormat";
 import { AccountContext } from "../context/AccountProvider";
+import DownloadIcon from "@mui/icons-material/Download";
+import { iconPDF } from "../../constants/constants";
+import { mediaDownload } from "../utils/downloadMedia";
 
 // const Wrapper = styled(Box)`
 //     background: #FFFFFF;
@@ -80,20 +83,78 @@ export default function ChatBubble(props) {
   return (
     <>
       {account.sub === message.senderId ? (
-        <Box style={style.senderBubbleContainer} margin={0.5}>
-          <Typography style={style.text}>{message.text}</Typography>
-          <Typography style={style.createdAt}>
-            {formatTime(message.createdAt)}
-          </Typography>
-        </Box>
+        <Box style={style.senderBubbleContainer} margin={0.5}></Box>
       ) : (
         <Box style={style.receiverBubbleContainer} margin={0.5}>
-          <Typography style={style.text}>{message.text}</Typography>
-          <Typography style={style.createdAt}>
-            {formatTime(message.createdAt)}
-          </Typography>
+          {message.type === "file" ? (
+            <ImageMessage message={message} />
+          ) : (
+            <TextMessage message={message} />
+          )}
         </Box>
       )}
     </>
   );
 }
+
+const TextMessage = ({ message }) => {
+  return (
+    <>
+      <Typography style={style.text}>{message.text}</Typography>
+      <Typography style={style.createdAt}>
+        {formatTime(message.createdAt)}
+      </Typography>
+    </>
+  );
+};
+
+const ImageMessage = ({ message }) => {
+  return (
+    <>
+      <Box>
+        {message?.text?.includes("pdf") ? (
+          <Box style={{ display: "flex", alignItems: "center" }}>
+            <img
+              src={iconPDF}
+              alt={"pdf"}
+              style={{ width: "80px", height: "100%", objectFit: "cover" }}
+            />
+            <Typography style={{ fontSize: "14px" }}>
+              {message.text.split("/").pop()}
+            </Typography>
+          </Box>
+        ) : (
+          <Box style={{ display: "flex", flexDirection: "column" }}>
+            <img
+              src={message.text}
+              alt={message.text}
+              style={{ width: "300px", height: "100%", objectFit: "cover" }}
+            />
+
+            <Typography
+              style={{
+                color: "#667781",
+                fontSize: "10px",
+                fontFamily: "Segoe UI",
+                wordBreak: "keep-all",
+              }}
+            >
+              <DownloadIcon
+                style={{
+                  alignItems: "center",
+                  marginRight: "40px",
+                  marginTop: "5px",
+                  border: "1px solid #667781",
+                  borderRadius: "50%",
+                }}
+                fontSize="small"
+                onClick={(e) => mediaDownload(e, message.text)}
+              />
+              {formatTime(message.createdAt)}
+            </Typography>
+          </Box>
+        )}
+      </Box>
+    </>
+  );
+};

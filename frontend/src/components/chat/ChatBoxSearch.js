@@ -32,7 +32,8 @@ const style = {
   },
 };
 export default function ChatBoxSearch(props) {
-  const { sendText, typedMessage, setTypedMessage, file, setFile } = props;
+  const { sendText, typedMessage, setTypedMessage, file, setFile, setImage } =
+    props;
 
   const onFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -40,16 +41,18 @@ export default function ChatBoxSearch(props) {
   };
 
   useEffect(() => {
-    const setImage = async () => {
+    const setFile = async () => {
       if (file) {
         const data = new FormData();
         data.append("name", file.name);
         data.append("file", file);
 
-        await uploadFile(data);
+        let response = await uploadFile(data);
+        console.log(response.data);
+        setImage(response.data);
       }
     };
-    setImage();
+    setFile();
   }, [file]);
 
   return (

@@ -12,19 +12,34 @@ export default function ChatBox() {
   const [typedMessage, setTypedMessage] = useState("");
   const [sendMessageFlag, setSendMessageFlag] = useState(false);
   const [file, setFile] = useState("");
+  const [image, setImage] = useState("");
 
   const sendText = async (e) => {
     const code = e.which;
     if (code === 13) {
-      let message = {
-        senderId: account.sub,
-        receiverId: person.sub,
-        conversationId: conversation._id,
-        type: "text",
-        text: typedMessage,
-      };
+      let message = {};
+      if (!file) {
+        message = {
+          senderId: account.sub,
+          receiverId: person.sub,
+          conversationId: conversation._id,
+          type: "text",
+          text: typedMessage,
+        };
+      } else {
+        message = {
+          senderId: account.sub,
+          receiverId: person.sub,
+          conversationId: conversation._id,
+          type: "file",
+          text: image,
+        };
+      }
+
       await newMessage(message);
       setTypedMessage("");
+      setFile("");
+      setImage("");
       setSendMessageFlag((prev) => !prev);
     }
   };
@@ -59,6 +74,7 @@ export default function ChatBox() {
             setTypedMessage={setTypedMessage}
             file={file}
             setFile={setFile}
+            setImage={setImage}
           />
         </Box>
       </Box>
