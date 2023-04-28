@@ -2,10 +2,11 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-require("dotenv").config();
+const dotenv = require("dotenv").config();
 const userRouter = require("./routes/userRoutes");
 const conversationRouter = require("./routes/conversationRoutes");
 const messageRouter = require("./routes/messageRoutes");
+const fileRouter = require("./routes/fileRoutes");
 
 // creating express app
 const app = express();
@@ -31,6 +32,7 @@ mongoose.connect(DB).then((con) => {
 app.use("/user", userRouter);
 app.use("/conversation", conversationRouter);
 app.use("/message", messageRouter);
+app.use("/file", fileRouter);
 
 // starting the server
 app.listen(process.env.PORT, () => {

@@ -9,8 +9,9 @@ import { getConversation, newMessage } from "../API/api";
 export default function ChatBox() {
   const { person, account } = useContext(AccountContext);
   const [conversation, setConversation] = useState({});
-  const [typedMessage, setTypedMessage] = React.useState("");
-  const [sendMessageFlag, setSendMessageFlag] = React.useState(false);
+  const [typedMessage, setTypedMessage] = useState("");
+  const [sendMessageFlag, setSendMessageFlag] = useState(false);
+  const [file, setFile] = useState("");
 
   const sendText = async (e) => {
     const code = e.which;
@@ -56,6 +57,8 @@ export default function ChatBox() {
             sendText={sendText}
             typedMessage={typedMessage}
             setTypedMessage={setTypedMessage}
+            file={file}
+            setFile={setFile}
           />
         </Box>
       </Box>

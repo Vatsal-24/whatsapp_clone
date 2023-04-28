@@ -59,3 +59,12 @@ export const getMessage = async (id) => {
     console.log("Failed to create new message", err);
   }
 };
+
+export const uploadFile = async (data) => {
+  try {
+    const response = await axios.post(`${url}/file`, data);
+    return response.data;
+  } catch (err) {
+    console.log("Failed to upload file", err);
+  }
+};
