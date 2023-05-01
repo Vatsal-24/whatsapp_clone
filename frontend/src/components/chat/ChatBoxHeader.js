@@ -42,6 +42,7 @@ const style = {
 
 export default function ChatBoxHeader(props) {
   const { person } = props;
+  const { activeUsers } = useContext(AccountContext);
   return (
     <>
       <Box style={style.mainContainer}>
@@ -54,7 +55,11 @@ export default function ChatBoxHeader(props) {
         </Box>
         <Box>
           <Typography style={style.name}>{person.name || "User"}</Typography>
-          <Typography style={style.status}>Online</Typography>
+          <Typography style={style.status}>
+            {activeUsers.find((user) => user.sub === person.sub)
+              ? "Online"
+              : "Offline"}
+          </Typography>
         </Box>
         <Box style={style.iconContainer}>
           <SearchIcon style={style.icon} />

@@ -1,12 +1,18 @@
 const Message = require("../models/messageModel");
 const Conversation = require("../models/conversationModel");
+const { newConversation } = require("./conversationController");
 
 exports.newMessage = async (req, res) => {
   try {
     const newMessage = await Message.create(req.body);
-    await Conversation.findByIdAndUpdate(req.body.conversationId, {
-      message: req.body.value,
-    });
+    console.log(req.body);
+    const newCOnvo = await Conversation.findByIdAndUpdate(
+      req.body.conversationId,
+      {
+        message: req.body.text,
+      }
+    );
+    console.log(newCOnvo);
     return res.status(200).json({
       status: "success",
       message: newMessage,
@@ -24,7 +30,6 @@ exports.newMessage = async (req, res) => {
 exports.getMessage = async (req, res) => {
   try {
     const conversationId = req.params.id;
-    console.log(conversationId);
     const message = await Message.find({
       conversationId: conversationId,
     });

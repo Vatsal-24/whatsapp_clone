@@ -7,12 +7,14 @@ import { AccountContext } from "../context/AccountProvider";
 import { getConversation, newMessage } from "../API/api";
 
 export default function ChatBox() {
-  const { person, account } = useContext(AccountContext);
+  const { person, account, socket, sendMessageFlag, setSendMessageFlag } =
+    useContext(AccountContext);
   const [conversation, setConversation] = useState({});
   const [typedMessage, setTypedMessage] = useState("");
-  const [sendMessageFlag, setSendMessageFlag] = useState(false);
+
   const [file, setFile] = useState("");
   const [image, setImage] = useState("");
+  const [incomingMessage, setIncomingMessage] = useState("");
 
   const sendText = async (e) => {
     const code = e.which;
@@ -35,7 +37,7 @@ export default function ChatBox() {
           text: image,
         };
       }
-
+      socket.current.emit("sendMessage", message);
       await newMessage(message);
       setTypedMessage("");
       setFile("");
@@ -55,6 +57,12 @@ export default function ChatBox() {
     getConversationDeatils();
   }, [person.sub]);
 
+  useEffect(() => {
+    socket.current.on("getMessage", (data) => {
+      setIncomingMessage({ ...data, createdAt: Date.now() });
+    });
+  });
+
   return (
     <>
       <Box>
@@ -65,6 +73,8 @@ export default function ChatBox() {
           <ChatBoxMessageSection
             sendMessageFlag={sendMessageFlag}
             setSendMessageFlag={setSendMessageFlag}
+            incomingMessage={incomingMessage}
+            conversation={conversation}
           />
         </Box>
         <Box>

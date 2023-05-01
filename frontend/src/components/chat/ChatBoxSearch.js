@@ -48,7 +48,6 @@ export default function ChatBoxSearch(props) {
         data.append("file", file);
 
         let response = await uploadFile(data);
-        console.log(response.data);
         setImage(response.data);
       }
     };

@@ -24,7 +24,6 @@ exports.uploadFile = async (req, res) => {
     }
 
     const fileUrl = `${url}/file/${req.file.filename}`;
-    console.log(req.file);
     return res.status(200).json(fileUrl);
   } catch (err) {
     console.log(err);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
 import Box from "@mui/material/Box";
 import { chatBackground } from "../../constants/constants";
 import { getConversation, getMessage } from "../API/api";
@@ -19,7 +19,10 @@ const style = {
 export default function ChatBoxMessageSection(props) {
   const { person, account } = useContext(AccountContext);
   const [messages, setMessages] = useState([]);
-  const { sendMessageFlag, setSendMessageFlag } = props;
+  const { sendMessageFlag, setSendMessageFlag, incomingMessage, conversation } =
+    props;
+  const scrollRef = useRef();
+
   useEffect(() => {
     // Fetching conversation
     let conversation = {};
@@ -34,11 +37,27 @@ export default function ChatBoxMessageSection(props) {
     };
     getConversationDeatils();
   }, [person._id, sendMessageFlag]);
+
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  useEffect(() => {
+    incomingMessage &&
+      conversation?.members?.includes(incomingMessage.senderId) &&
+      setMessages((prev) => [...prev, incomingMessage]);
+  }, [incomingMessage, conversation]);
+
   return (
     <>
       <Box style={style.container}>
         {messages &&
-          messages.map((message) => <ChatBubble message={message} />)}
+          messages.map((message) => (
+            <>
+              <ChatBubble message={message} key={message._id} />
+              <div ref={scrollRef} />
+            </>
+          ))}
       </Box>
     </>
   );

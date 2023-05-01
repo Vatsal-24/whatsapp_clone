@@ -1,8 +1,13 @@
 import React, { useEffect, useContext } from "react";
-import { getAllUsers } from "../API/api";
-import { setConversation } from "../API/api";
+import {
+  getAllUsers,
+  getConversation,
+  newMessage,
+  setConversation,
+} from "../API/api";
 import Box from "@mui/material/Box";
 import { AccountContext } from "../context/AccountProvider";
+import { formatTime } from "../utils/TimeFormat";
 
 const style = {
   chatContainer: {
@@ -35,9 +40,36 @@ const style = {
 };
 export default function Conversations(props) {
   const [users, setUsers] = React.useState([]);
-  const { account } = useContext(AccountContext);
-  const { person, setPerson } = useContext(AccountContext);
+  const [latestMessage, setLatestMessage] = React.useState();
+
+  const {
+    account,
+    socket,
+    setActiveUsers,
+    sendMessageFlag,
+    setSendMessageFlag,
+    person,
+    setPerson,
+  } = useContext(AccountContext);
   const { searchText } = props;
+
+  const getPerson = async (user) => {
+    await setConversation({ senderId: account.sub, receiverId: user.sub });
+    setPerson(user);
+  };
+
+  useEffect(() => {
+    const getConversationDetails = async () => {
+      const res = await getConversation({
+        senderId: account.sub,
+        receiverId: person.sub,
+      });
+      const data = res.conversation;
+      console.log(data);
+      setLatestMessage({ text: data?.message, timestamp: data?.updatedAt });
+    };
+    person && getConversationDetails();
+  }, [sendMessageFlag, person]);
 
   useEffect(() => {
     async function fetchData() {
@@ -50,10 +82,13 @@ export default function Conversations(props) {
     fetchData();
   }, [searchText]);
 
-  const getPerson = async (user) => {
-    await setConversation({ senderId: account.sub, receiverId: user.sub });
-    setPerson(user);
-  };
+  useEffect(() => {
+    socket.current.emit("addUsers", account);
+    socket.current.on("getUsers", (users) => {
+      setActiveUsers(users);
+    });
+  }, [account]);
+
   return (
     <>
       <Box style={style.chatContainer}>
@@ -78,6 +113,15 @@ export default function Conversations(props) {
                         />
                       </Box>
                       <Box style={style.nameContainer}>{user.name}</Box>
+                      {latestMessage?.text && (
+                        <Box>{formatTime(latestMessage?.timestamp)}</Box>
+                      )}
+
+                      <Box>
+                        {latestMessage?.text?.includes("localhost")
+                          ? "media"
+                          : latestMessage?.text}
+                      </Box>
                     </Box>
                   ) : (
                     <Box
@@ -95,6 +139,15 @@ export default function Conversations(props) {
                         />
                       </Box>
                       <Box style={style.nameContainer}>{user.name}</Box>
+                      {latestMessage?.text && (
+                        <Box>{formatTime(latestMessage?.timestamp)}</Box>
+                      )}
+
+                      <Box>
+                        {latestMessage?.text?.includes("localhost")
+                          ? "media"
+                          : latestMessage?.text}
+                      </Box>
                     </Box>
                   )}
                 </>
